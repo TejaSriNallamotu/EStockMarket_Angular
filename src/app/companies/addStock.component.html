@@ -1,0 +1,27 @@
+
+<div class="col-md-6 offset-md-3 mt-5">
+    <div class="card ">
+        <h4 class="card-header">Add Stock</h4>
+        <div class="card-body">
+            <form [formGroup]="form" (ngSubmit)="onSave()">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="price">Stock Price</label>
+                        <input type="number" step="0.01" [(ngModel)]="price" formControlName="price" 
+                               class="form-control" [ngClass]="{ 'is-invalid': f['price'].touched &&  f['price'].errors }" />
+                        <div *ngIf="f['price'].errors" class="invalid-feedback">
+                            <div *ngIf="f['price'].errors['required']">Stock Price is required</div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="form-group">
+                    <button [disabled]="loading && !form.valid" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Save
+                    </button>
+                    <a routerLink="/companies" [ngClass]="{ 'is-invalid': f['price'].errors }" class="btn btn-link">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

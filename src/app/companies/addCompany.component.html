@@ -1,0 +1,58 @@
+<div class="col-md-6 offset-md-3 mt-5">
+  <div class="card ">
+    <h4 class="card-header">Add Company</h4>
+    <div class="card-body">
+        <form  [formGroup]="form" (ngSubmit)="onSave()">
+            <div class="form-group col">
+                <label for="Code">Company Code</label>
+                <input type="text"  formControlName="Code" class="form-control" [ngClass]="{ 'is-invalid': f['Code'].touched &&  f['Code'].errors }" />
+                <div *ngIf="f['Code'].errors" class="invalid-feedback">
+                    <div *ngIf="f['Code'].errors['required']">Company Code is required</div>
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="Name">Company Name</label>
+                <input type="text"  formControlName="Name" class="form-control" [ngClass]="{ 'is-invalid': f['Name'].touched &&  f['Name'].errors }" />
+                <div *ngIf="f['Name'].errors" class="invalid-feedback">
+                    <div *ngIf="f['Name'].errors['required']">Company Name is required</div>
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="Ceo">Company CEO</label>
+                <input type="text"  formControlName="Ceo" class="form-control" [ngClass]="{ 'is-invalid': f['Ceo'].touched &&  f['Ceo'].errors }" />
+                <div *ngIf="f['Ceo'].errors" class="invalid-feedback">
+                    <div *ngIf="f['Ceo'].errors['required']">Company CEO is required</div>
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="TurnOver">Company Turn Over</label>
+                <input type="number" min="100000000" formControlName="TurnOver" class="form-control" [ngClass]="{ 'is-invalid': f['TurnOver'].touched &&  f['TurnOver'].errors }" />
+                <div *ngIf="f['TurnOver'].errors" class="invalid-feedback">
+                    <div *ngIf="f['TurnOver'].errors">Company Turnover must be greater than 10Cr.</div>
+                </div>
+            </div>
+            <div class="form-group col">
+                <label for="Website">Company Website</label>
+                <input type="url" formControlName="Website" class="form-control" [ngClass]="{ 'is-invalid': f['Website'].touched &&  f['Website'].errors }" />
+                <div *ngIf="f['Website'].errors" class="invalid-feedback">
+                    <div *ngIf="f['Website'].errors['required']">Company Website is required</div>
+                </div>
+            </div> 
+            <div class="form-group col">
+                <label for="Exchange">Stock Exchange</label>
+                <input type="text"  formControlName="Exchange" class="form-control" [ngClass]="{ 'is-invalid': f['Exchange'].touched &&  f['Exchange'].errors }" />
+                <div *ngIf="f['Exchange'].errors" class="invalid-feedback">
+                    <div *ngIf="f['Exchange'].errors['required']">Stock Exchange is required</div>
+                </div>
+            </div>
+            <div class="form-group col">
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Save
+                </button>
+                <a routerLink="/companies"  class="btn btn-link">Cancel</a>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>

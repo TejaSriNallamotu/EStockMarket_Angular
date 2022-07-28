@@ -1,0 +1,90 @@
+<h1>Companies</h1>
+
+<div class="form-group" >
+    <a routerLink="addCompany" class="btn btn-sm btn-success mb-2" style="float: left;">Add Company</a>
+    <input type="text" placeholder="Search Company Code" style="float: right;" [(ngModel)]="companyCode">
+</div>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th style="width: 45%">Company Code</th>
+            <th style="width: 45%">Company Name</th>
+            <th style="width: 20%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor=" let company of companies | async  | companyfilter:companyCode">
+            <td>{{company.code}}</td>
+            <td>{{company.name}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="addStock/{{company.code}}" class="btn btn-sm btn-success mr-1">Add Stock</a>
+                <button (click)="deleteCompany(company.code)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="company.isDeleting">
+                    <span *ngIf="company.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!company.isDeleting">Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td *ngIf="!companies" colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+            <!-- <td  [hidden]="companies" colspan="4" class="text-center">
+                <span   class="align-center">No Result Found</span>
+            </td> -->
+        </tr>
+    </tbody>
+</table>
+<div style="display: flex;justify-content: center;">
+    <div class="form-group" style="float: left; width: 40%">
+        <label for="startDate" >Start Date </label>
+        <input type="datetime-local" [(ngModel)]="startDate" (change)="validateDateTime()">
+    </div>
+    <div class="form-group" style="float:left; width: 40%">
+        <label for="endDate">End Date </label>
+        <input type="datetime-local" [(ngModel)]="endDate"  (change)="validateDateTime()">
+    </div>
+    <div class="form-group"  style="float:right; width: 40%">
+        <button  style="text-align:end;" class="btn btn-sm btn-primary mb-2"  
+        (click)="GetStocks(companyCode,startDate,endDate)" [disabled]="dateDiff || !companyCode">Get Stocks</button>
+    </div>
+</div>
+<table class="table table-striped" >
+    <thead class="thead-dark">
+        <tr>
+            <th style="width: 40%">Stock Price</th>
+            <th style="width: 40%">Date</th>
+            <th style="width: 20%">Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let stock of stocks | stockfilter:companyCode">
+            <td>{{stock.price}}</td>
+            <td>{{stock.createdOn | date  : 'dd.MM.yyyy'}}</td>
+            <td>{{stock.createdOn | date  : 'HH:mm:ss'}}</td>
+        </tr>
+        <tr>
+            <td  *ngIf="!stocks" colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+            <!-- <td  [hidden]="stocks" colspan="4" class="text-center">
+                <span  class="align-center">No Result Found</span>
+            </td> -->
+        </tr>
+    </tbody>
+</table>
+<table class="table table-bordered text-center" style=" margin: 0 auto;width:auto;"  *ngIf="stockDisplay">
+    <tbody>
+        <tr>
+            <th  scope="row">MIN</th>
+            <td>{{minValue}}</td>
+        </tr>
+        <tr>
+            <th  scope="row">MAX</th>
+            <td>{{maxValue}}</td>
+        </tr>
+        <tr>
+            <th  scope="row">AVG</th>
+            <td >{{avgValue}}</td>
+        </tr>
+    </tbody>
+</table>
